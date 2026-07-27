@@ -1,0 +1,48 @@
+{
+  "channel": "stable",
+  "version": "1.0.0",
+  "updated_at": "2026-07-26T22:33:00Z",
+  "runtime": {
+    "file": "runtime/runtime.v1.0.0.js",
+    "hash": "sha256-runtime-v1",
+    "min_loader_version": "1.0.0"
+  },
+  "modules": {
+    "ui": {
+      "file": "modules/ui/ui.v1.0.0.js",
+      "version": "1.0.0",
+      "hash": "sha256-ui-v1",
+      "depends": []
+    },
+    "reader": {
+      "file": "modules/reader/reader.v1.0.0.js",
+      "version": "1.0.0",
+      "hash": "sha256-reader-v1",
+      "depends": []
+    },
+    "ai-prompts": {
+      "file": "modules/ai/prompts.js",
+      "version": "1.0.0",
+      "hash": "sha256-ai-prompts-v1",
+      "depends": []
+    },
+    "ai-parser": {
+      "file": "modules/ai/parser.js",
+      "version": "1.0.0",
+      "hash": "sha256-ai-parser-v1",
+      "depends": []
+    },
+    "ai": {
+      "file": "modules/ai/ai.v1.0.0.js",
+      "version": "1.0.0",
+      "hash": "sha256-ai-v1",
+      "depends": ["ai-prompts", "ai-parser"]
+    },
+    "quiz": {
+      "file": "modules/quiz/quiz.v1.0.0.js",
+      "version": "1.0.0",
+      "hash": "sha256-quiz-v1",
+      "depends": ["ai"]
+    }
+  }
+}

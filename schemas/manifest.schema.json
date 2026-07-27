@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ElefanteManifestSchema",
+  "type": "object",
+  "required": ["channel", "version", "updated_at", "runtime", "modules"],
+  "properties": {
+    "channel": {
+      "type": "string",
+      "enum": ["stable", "beta", "dev"]
+    },
+    "version": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    },
+    "runtime": {
+      "type": "object",
+      "required": ["file", "hash", "min_loader_version"],
+      "properties": {
+        "file": { "type": "string" },
+        "hash": { "type": "string" },
+        "min_loader_version": { "type": "string" }
+      }
+    },
+    "modules": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["file", "version", "hash", "depends"],
+        "properties": {
+          "file": { "type": "string" },
+          "version": { "type": "string" },
+          "hash": { "type": "string" },
+          "depends": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}
