@@ -308,4 +308,16 @@
 
   window.ElefanteRuntime = window.ElefanteRuntime || new ElefanteRuntime();
 
+  // Auto-boot: detecta payload injetado pelo Bootloader antes deste script.
+  // O Bootloader não consegue chamar window.ElefanteRuntime diretamente por causa
+  // do isolamento de contexto sandbox → página no Tampermonkey/Firefox.
+  // Solução: o Bootloader serializa manifest+moduleCodes via JSON num script de payload,
+  // e o Runtime detecta e consome esse payload logo ao ser carregado.
+  if (window.__ElefanteBootPayload) {
+    const { manifest, moduleCodes } = window.__ElefanteBootPayload;
+    delete window.__ElefanteBootPayload; // limpa após consumir
+    console.log('[⚙️ Runtime] Payload detectado. Iniciando bootFromModules automaticamente...');
+    window.ElefanteRuntime.bootFromModules(manifest, moduleCodes);
+  }
+
 })();
