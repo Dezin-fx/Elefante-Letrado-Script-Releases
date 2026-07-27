@@ -1,10 +1,20 @@
 /**
  * Elefante Assistente de Estudo - Core Runtime v1.0.0
  * Orquestrador central e Sistema Operacional da plataforma de Userscript.
+ *
+ * NOTA DE CONTEXTO: Este arquivo é injetado como um <script> no DOM pelo Bootloader.
+ * Portanto, ele NÃO tem acesso direto às funções GM_* do Tampermonkey.
+ * Os shims de GM são injetados pelo Bootloader via window.__ElefanteGM antes deste script carregar.
  */
 
 (function () {
   'use strict';
+
+  // Recupera os shims de GM injetados pelo Bootloader (contexto privilegiado)
+  const GM = window.__ElefanteGM || {};
+  const _GM_getValue      = GM.getValue      || (() => null);
+  const _GM_setValue      = GM.setValue      || (() => {});
+  const _GM_xmlhttpRequest = GM.xmlhttpRequest || (() => { throw new Error('[Runtime] GM_xmlhttpRequest não disponível.'); });
 
   class EventBus {
     constructor() {
@@ -111,24 +121,24 @@
         }
       });
 
-      // Storage Nativo Encapsulado
+      // Storage Nativo Encapsulado (usa shims GM injetados pelo Bootloader)
       this.registerService('storage', {
-        getApiKey: () => GM_getValue('apiKey', ''),
-        setApiKey: (k) => GM_setValue('apiKey', k),
-        getBookTitle: () => GM_getValue('bookTitle', ''),
-        setBookTitle: (t) => GM_setValue('bookTitle', t),
-        getNoAI: () => GM_getValue('noAI', false),
-        setNoAI: (v) => GM_setValue('noAI', Boolean(v)),
-        getSelectedModel: () => GM_getValue('selectedModel', 'cohere/north-mini-code:free'),
-        setSelectedModel: (m) => GM_setValue('selectedModel', m),
-        getAutoMinMin: () => GM_getValue('autoMinMin', 2),
-        getAutoMaxMin: () => GM_getValue('autoMaxMin', 3),
-        setAutoMinMin: (v) => GM_setValue('autoMinMin', v),
-        setAutoMaxMin: (v) => GM_setValue('autoMaxMin', v),
+        getApiKey: () => _GM_getValue('apiKey', ''),
+        setApiKey: (k) => _GM_setValue('apiKey', k),
+        getBookTitle: () => _GM_getValue('bookTitle', ''),
+        setBookTitle: (t) => _GM_setValue('bookTitle', t),
+        getNoAI: () => _GM_getValue('noAI', false),
+        setNoAI: (v) => _GM_setValue('noAI', Boolean(v)),
+        getSelectedModel: () => _GM_getValue('selectedModel', 'cohere/north-mini-code:free'),
+        setSelectedModel: (m) => _GM_setValue('selectedModel', m),
+        getAutoMinMin: () => _GM_getValue('autoMinMin', 2),
+        getAutoMaxMin: () => _GM_getValue('autoMaxMin', 3),
+        setAutoMinMin: (v) => _GM_setValue('autoMinMin', v),
+        setAutoMaxMin: (v) => _GM_setValue('autoMaxMin', v),
         resetAll: () => {
-          GM_setValue('apiKey', '');
-          GM_setValue('bookTitle', '');
-          GM_setValue('noAI', false);
+          _GM_setValue('apiKey', '');
+          _GM_setValue('bookTitle', '');
+          _GM_setValue('noAI', false);
         }
       });
     }
@@ -155,7 +165,7 @@
 
       const moduleEntries = Object.entries(manifest.modules || {});
 
-      // 1. Download e Injeção de Módulos
+      // 1. Download e Injeção de Módulos (usa _GM_xmlhttpRequest via shim)
       for (const [name, info] of moduleEntries) {
         try {
           const fullUrl = /^https?:\/\//i.test(info.file)
@@ -174,6 +184,40 @@
       await this.startAll();
     }
 
+    /**
+     * Caminho principal de boot: recebe o manifesto E os códigos dos módulos
+     * já baixados pelo Bootloader (que tem acesso GM real).
+     * Isso evita completamente a necessidade de GM no contexto de página.
+     *
+     * @param {object} manifest   - Manifesto de canais (stable.json)
+     * @param {object} moduleCodes - Map de { nomeMódulo: codigoJS }
+     */
+    async bootFromModules(manifest, moduleCodes) {
+      console.log(`\n======================================================`);
+      console.log(`🚀 RUNTIME v${this.version} - BOOT (${manifest.channel} v${manifest.version})`);
+      console.log(`======================================================\n`);
+
+      const moduleOrder = Object.keys(manifest.modules || {});
+
+      // 1. Injeta os módulos na ordem declarada no manifesto
+      for (const name of moduleOrder) {
+        const code = moduleCodes[name];
+        if (!code) {
+          console.warn(`[⚙️ Runtime] Código do módulo "${name}" não recebido do Bootloader. Pulando.`);
+          continue;
+        }
+        console.log(`[⚙️ Runtime] Injetando módulo "${name}" (${code.length} bytes)...`);
+        this.injectScript(code, `module-${name}`);
+      }
+
+      // 2. Pequena pausa para garantir que todos os scripts foram avaliados pelo browser
+      await new Promise(r => setTimeout(r, 50));
+
+      // 3. Dispara a inicialização em ordem de dependências
+      await this.startAll();
+    }
+
+
     injectScript(code, id) {
       const script = document.createElement('script');
       if (id) script.id = id;
@@ -183,7 +227,7 @@
 
     fetchText(url) {
       return new Promise((resolve, reject) => {
-        GM_xmlhttpRequest({
+        _GM_xmlhttpRequest({
           method: 'GET',
           url: url,
           onload: r => r.status === 200 ? resolve(r.responseText) : reject(new Error(`HTTP ${r.status}`)),

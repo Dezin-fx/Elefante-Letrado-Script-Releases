@@ -2,10 +2,16 @@
  * Elefante Assistente de Estudo - Módulo IA v1.0.0
  * Gerenciador de requisições HTTP (OpenRouter), prompts e parsing de respostas.
  * Totalmente isolado do DOM e da Interface de Usuário.
+ *
+ * NOTA: Este módulo é injetado como script DOM. Usa window.__ElefanteGM para
+ * acessar as funções privilegiadas do Tampermonkey injetadas pelo Bootloader.
  */
 
 (function () {
   'use strict';
+
+  const _GM_xmlhttpRequest = (window.__ElefanteGM || {}).xmlhttpRequest ||
+    (() => { throw new Error('[AI Module] GM_xmlhttpRequest não disponível via shim.'); });
 
   const AIModule = {
     name: 'ai',
@@ -93,7 +99,7 @@
         });
 
         const requestPromise = new Promise((res, rej) => {
-          GM_xmlhttpRequest({
+          _GM_xmlhttpRequest({
             method: 'POST',
             url: 'https://openrouter.ai/api/v1/chat/completions',
             headers: {
