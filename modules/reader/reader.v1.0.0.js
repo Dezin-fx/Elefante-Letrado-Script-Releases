@@ -1,5 +1,5 @@
 /**
- * Elefante Assistente de Estudo - Módulo Reader v1.0.0
+ * Elefante Letrado Script- Módulo Reader v1.0.0
  * Responsável pelo temporizador aleatório e automação da virada de página (ArrowRight).
  * Totalmente desacoplado da UI e de chamadas diretas de outros módulos.
  */
