@@ -1,5 +1,5 @@
 /**
- * Elefante Assistente de Estudo - UI Styles & Animations
+ * Elefante Letrado Script - UI Styles & Animations
  */
 
 (function () {
