@@ -1,5 +1,5 @@
 /**
- * Elefante Letrado-Script de Estudo - Core Runtime v1.0.0
+ * Elefante Letrado Script de Estudo - Core Runtime v1.0.0
  * Orquestrador central e Sistema Operacional da plataforma de Userscript.
  *
  * NOTA DE CONTEXTO: Este arquivo é injetado como um <script> no DOM pelo Bootloader.
