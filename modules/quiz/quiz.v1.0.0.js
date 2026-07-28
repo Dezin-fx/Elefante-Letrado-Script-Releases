@@ -1,5 +1,5 @@
 /**
- * Elefante Assistente de Estudo - Módulo Quiz v1.0.0
+ * Elefante Letrado Script - Módulo Quiz v1.0.0
  * Responsável por capturar o modal de quiz no DOM, extrair dados, solicitar resolução à IA e preencher respostas.
  * Totalmente desacoplado da UI e do gerenciamento de paginação do Reader.
  */
