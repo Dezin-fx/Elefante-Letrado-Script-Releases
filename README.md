@@ -62,10 +62,10 @@ Ele busca o manifesto e delega todo o resto ao Runtime modular.
 ---
 
 ### Repositório Secundário — Distribuição
-> `github.com/Dezin-fx/Elefante-Assistente-Releases`
+> `github.com/Dezin-fx/Elefante-Letrado-Script-Releases`
 
 ```
-Elefante-Assistente-Releases/
+Elefante-Letrado-Script-Releases/
 │
 ├── channels/
 │   └── stable.json              ← Manifesto do canal estável
