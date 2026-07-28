@@ -1,5 +1,5 @@
 /**
- * Elefante Assistente de Estudo - Parsers do Módulo IA
+ * Elefante Letrado Script- Parsers do Módulo IA
  * Processador e limpador de respostas fornecidas pelos modelos de IA.
  */
 
