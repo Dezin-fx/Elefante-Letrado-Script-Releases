@@ -1,5 +1,5 @@
 /**
- * Elefante Assistente de Estudo - Módulo IA v1.0.0
+ * Elefante Letrado Script - Módulo IA v1.0.0
  * Gerenciador de requisições HTTP (OpenRouter), prompts e parsing de respostas.
  * Totalmente isolado do DOM e da Interface de Usuário.
  *
