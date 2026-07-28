@@ -1,5 +1,5 @@
 /**
- * Elefante Assistente de Estudo - UI SVG Icons
+ * Elefante Letrado-Script - UI SVG Icons
  */
 
 (function () {
