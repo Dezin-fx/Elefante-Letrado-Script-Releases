@@ -1,4 +1,4 @@
-# 🐘 Elefante Assistente de Estudo — Visão Geral da Arquitetura
+# Elefante Letrado Script — Visão Geral da Arquitetura
 
 > Documento gerado ao término da **Fase 6** de migração arquitetural.
 > A arquitetura evoluiu de um Userscript monolítico (~1.191 linhas) para uma plataforma modular profissional baseada em plugins.
@@ -168,4 +168,4 @@ Módulos com falha ficam no estado `FAILED` ou `BLOCKED` (se dependem de um mód
 | **5 — Módulo Reader** | `modules/reader/reader.v1.0.0.js` com auto-pausa/retomada via eventos |
 | **6 — Módulo AI** | `modules/ai/` — ai, prompts e parser encapsulando OpenRouter |
 | **7 — Módulo Quiz** | `modules/quiz/quiz.v1.0.0.js` com MutationObserver debounced e integração via serviço AI |
-| **8 — Bootloader Oficial** | `Elefante-Letrado-Script/Script.user.js` — ponto de entrada final |
+| **8 — Bootloader Oficial** | `-Letrado-Script/Script.user.js` — ponto de entrada final |
