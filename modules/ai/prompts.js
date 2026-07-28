@@ -1,5 +1,5 @@
 /**
- * Elefante Assistente de Estudo - Prompts do Módulo IA
+ * Elefante Letrado Script - Prompts do Módulo IA
  * Gerenciador e construtor de prompts para diferentes tipos de questões.
  */
 
