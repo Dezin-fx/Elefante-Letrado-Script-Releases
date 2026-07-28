@@ -1,5 +1,5 @@
 /**
- * Elefante Letrado-Script - Módulo UI v1.0.0
+ * Elefante Letrado Script - Módulo UI v1.0.0
  * Gerenciador de interface visual, renderizador de painel flutuante e formulários.
  */
 
