@@ -349,7 +349,7 @@
           </select>
 
           <div id="ea-custom-model-container" style="width:100%;display:${isCustom ? 'block' : 'none'};margin-bottom:8px;">
-            <input id="ea-custom-model-input" type="text" placeholder="provider/model-name" value="${isCustom ? modeloSalvo : ''}" style="width:100%;box-sizing:border-box;padding:9px 10px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#cdd6f4;font-family:monospace;font-size:13px;">
+            <input id="ea-custom-model-input" type="text" placeholder="provider/model-name" value="${isCustom ? modeloSalvo : ''}" style="width:100%;box-sizing:border-box;padding:9px 10px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#cdd6f4;font-family:monospace;font-size:13px;text-align:center;">
           </div>
 
           <div style="width:100%;border-top:1px solid #313244;margin:14px 0;"></div>
