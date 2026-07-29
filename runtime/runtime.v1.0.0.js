@@ -10,9 +10,12 @@
 (function () {
   'use strict';
 
-  // Recupera os shims de GM injetados pelo Bootloader (contexto privilegiado)
+  console.log("[Runtime] window.__ElefanteGM =", window.__ElefanteGM);
   const GM = window.__ElefanteGM || {};
+  console.log("[Runtime] GM =", GM);
+  console.log("[Runtime] typeof GM.getValue =", typeof GM.getValue);
   const _GM_getValue      = GM.getValue      || (() => null);
+  console.log("[Runtime] teste autoMinMin =", _GM_getValue("autoMinMin", 2));
   const _GM_setValue      = GM.setValue      || (() => {});
   const _GM_xmlhttpRequest = GM.xmlhttpRequest || (() => { throw new Error('[Runtime] GM_xmlhttpRequest não disponível.'); });
 
