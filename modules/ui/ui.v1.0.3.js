@@ -8,7 +8,7 @@
 
   const UIModule = {
     name: 'ui',
-    version: '1.0.2',
+    version: '1.0.3',
     depends: [],
 
     async init(runtime) {
@@ -348,9 +348,7 @@
             <option value="__custom__" ${isCustom ? 'selected' : ''}>Outro (digitar manualmente)</option>
           </select>
 
-          <div id="ea-custom-model-container" style="width:100%;display:${isCustom ? 'block' : 'none'};margin-bottom:8px;">
-            <input id="ea-custom-model-input" type="text" placeholder="provider/model-name" value="${isCustom ? modeloSalvo : ''}" style="width:100%;box-sizing:border-box;padding:9px 10px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#cdd6f4;font-family:monospace;font-size:13px;text-align:center;">
-          </div>
+          <input id="ea-custom-model-input" type="text" placeholder="provider/nome-do-modelo:free" value="${isCustom ? modeloSalvo : ''}" style="width:100%;box-sizing:border-box;padding:9px 10px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#89b4fa;font-family:Inter,sans-serif;font-size:12px;margin-bottom:6px;display:${isCustom ? 'block' : 'none'};text-align:left;">
 
           <div style="font-size:11px;color:#6c7086;margin-bottom:4px;width:100%;text-align:left;">
             Mais modelos em: <a href="https://openrouter.ai/models" target="_blank" style="color:#89b4fa;text-decoration:none;">openrouter.ai/models</a>
@@ -372,16 +370,15 @@
       `);
 
       const selectEl = document.getElementById('ea-model-select');
-      const customContainer = document.getElementById('ea-custom-model-container');
       const customInput = document.getElementById('ea-custom-model-input');
       const saveBtn = document.getElementById('ea-model-save');
       const backBtn = document.getElementById('ea-model-back');
 
       selectEl.onchange = () => {
         if (selectEl.value === '__custom__') {
-          customContainer.style.display = 'block';
+          customInput.style.display = 'block';
         } else {
-          customContainer.style.display = 'none';
+          customInput.style.display = 'none';
         }
       };
 
