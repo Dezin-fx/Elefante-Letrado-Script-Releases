@@ -86,8 +86,9 @@
       // Notifica o sistema que a leitura começou
       this.runtime.events.emit('reader:started');
 
-      // Agenda o primeiro tick de troca de página
-      this.scheduleNextTick();
+      // Executa o primeiro tick IMEDIATAMENTE (igual ao script original)
+      // O tick vira a página na hora e depois agenda a próxima virada
+      this.tick();
     },
 
     stopReading(reason = 'Parada') {
