@@ -44,6 +44,27 @@
           this.startReading();
         }
       });
+
+      // Captura o título do livro do DOM automaticamente
+      const checkBookTitle = () => {
+        const titleEl = document.querySelector('span.book-title');
+        const title = titleEl?.title?.trim() || titleEl?.textContent?.trim();
+        if (title) {
+          runtime.services.storage.setBookTitle(title);
+          runtime.events.emit('reader:book-found', { title });
+          return true;
+        }
+        return false;
+      };
+
+      if (!checkBookTitle()) {
+        const observer = new MutationObserver(() => {
+          if (checkBookTitle()) {
+            observer.disconnect();
+          }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+      }
     },
 
     async start() {
