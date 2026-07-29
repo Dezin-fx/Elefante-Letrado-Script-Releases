@@ -141,11 +141,15 @@
 
     triggerPageTurn() {
       console.log('[📖 Reader] ➡️ Disparando tecla ArrowRight no leitor...');
-      document.body.dispatchEvent(new KeyboardEvent('keydown', {
+      const evt = new KeyboardEvent('keydown', {
         key: 'ArrowRight',
         code: 'ArrowRight',
+        keyCode: 39,
+        which: 39,
         bubbles: true
-      }));
+      });
+      document.body.dispatchEvent(evt);
+      document.dispatchEvent(evt);
     },
 
     isQuizModalOpen() {
