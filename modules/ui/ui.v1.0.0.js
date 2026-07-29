@@ -356,9 +356,17 @@
 
           <p style="margin:0 0 8px;font-size:15px;color:#a6adc8;width:100%;text-align:left;font-family: 'Inter', sans-serif;font-weight: 600;">Intervalo de auto-página (minutos):</p>
           <div style="display:flex;align-items:center;gap:10px;width:100%;margin-bottom:4px;">
-            <input id="ea-min-input" type="text" value="${minSalvo}" style="flex:1;height:48px;padding:0 12px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#cdd6f4;font-family:Inter,sans-serif;font-size:15px;text-align:center;">
-            <span style="color:#a6adc8;font-weight:600;font-family:'Manrope',sans-serif;">a</span>
-            <input id="ea-max-input" type="text" value="${maxSalvo}" style="flex:1;height:48px;padding:0 12px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#cdd6f4;font-family:Inter,sans-serif;font-size:15px;text-align:center;">
+            <input id="ea-min-input" type="text" inputmode="decimal" value="${minSalvo}" style="
+              flex: 1 1 0; min-width: 0; height: 48px; padding: 0 12px; border: 2px solid #45475a; border-radius: 8px;
+              background: #11111b; color: #cdd6f4; font-family: Inter,sans-serif; font-size: 15px; text-align: center;
+              box-sizing: border-box; outline: none;
+            ">
+            <span style="color:#a6adc8;font-weight:600;font-family:'Manrope',sans-serif;flex-shrink:0;">a</span>
+            <input id="ea-max-input" type="text" inputmode="decimal" value="${maxSalvo}" style="
+              flex: 1 1 0; min-width: 0; height: 48px; padding: 0 12px; border: 2px solid #45475a; border-radius: 8px;
+              background: #11111b; color: #cdd6f4; font-family: Inter,sans-serif; font-size: 15px; text-align: center;
+              box-sizing: border-box; outline: none;
+            ">
           </div>
           <div id="ea-interval-err" style="color:#f38ba8;font-size:12px;width:100%;margin-bottom:4px;"></div>
 
