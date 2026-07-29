@@ -350,7 +350,7 @@
 
           <input id="ea-custom-model-input" type="text" placeholder="provider/nome-do-modelo:free" value="${isCustom ? modeloSalvo : ''}" style="width:100%;box-sizing:border-box;padding:9px 10px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#89b4fa;font-family:Inter,sans-serif;font-size:12px;margin-bottom:6px;display:${isCustom ? 'block' : 'none'};text-align:left;">
 
-          <div style="font-size:11px;color:#6c7086;margin-bottom:4px;width:100%;text-align:left;transform:translateY(3px);">
+          <div style="font-size:12px;color:#6c7086;margin-bottom:4px;width:100%;text-align:left;transform:translateY(3px);">
             Mais modelos em: <a href="https://openrouter.ai/models" target="_blank" style="color:#89b4fa;text-decoration:none;">openrouter.ai/models</a>
           </div>
 
