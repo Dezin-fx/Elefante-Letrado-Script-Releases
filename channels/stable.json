@@ -1,8 +1,7 @@
 {
-  "_comment": "Manifesto de TESTE INICIAL - carrega apenas Runtime + UI para validar o boot.",
   "channel": "stable",
   "version": "1.0.0",
-  "updated_at": "2026-07-26T23:27:00Z",
+  "updated_at": "2026-07-29T14:00:00Z",
   "runtime": {
     "file": "runtime/runtime.v1.0.0.js",
     "hash": "sha256-placeholder",
@@ -21,11 +20,41 @@
       "hash": "sha256-placeholder",
       "depends": []
     },
+    "ai-prompts": {
+      "file": "modules/ai/prompts.js",
+      "version": "1.0.0",
+      "hash": "sha256-placeholder",
+      "depends": []
+    },
+    "ai-parser": {
+      "file": "modules/ai/parser.js",
+      "version": "1.0.0",
+      "hash": "sha256-placeholder",
+      "depends": []
+    },
+    "ai": {
+      "file": "modules/ai/ai.v1.0.0.js",
+      "version": "1.0.0",
+      "hash": "sha256-placeholder",
+      "depends": ["ai-prompts", "ai-parser"]
+    },
     "ui": {
       "file": "modules/ui/ui.v1.0.0.js",
       "version": "1.0.0",
       "hash": "sha256-placeholder",
       "depends": ["ui-styles", "ui-icons"]
+    },
+    "reader": {
+      "file": "modules/reader/reader.v1.0.0.js",
+      "version": "1.0.0",
+      "hash": "sha256-placeholder",
+      "depends": []
+    },
+    "quiz": {
+      "file": "modules/quiz/quiz.v1.0.0.js",
+      "version": "1.0.0",
+      "hash": "sha256-placeholder",
+      "depends": ["ai"]
     }
   }
 }

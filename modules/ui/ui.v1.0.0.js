@@ -328,16 +328,29 @@
       const minSalvo = storage.getAutoMinMin();
       const maxSalvo = storage.getAutoMaxMin();
 
+      const presets = [
+        'cohere/north-mini-code:free',
+        'openai/gpt-oss-120b:free',
+        'meta-llama/llama-3.3-70b-instruct:free'
+      ];
+      const isCustom = !presets.includes(modeloSalvo);
+      const selectedValue = isCustom ? '__custom__' : modeloSalvo;
+
       this.renderContent(`
         <div style="display:flex;flex-direction:column;align-items:center;">
           <b style="color:#cba6f7;font-family:'Manrope', sans-serif;font-weight:700;letter-spacing:0.2px;font-size:16px;display:flex;align-items:center;gap:8px;">${i.svgConfig} Configurações</b>
           
           <p style="font-family: 'Inter', sans-serif;font-weight: 600;margin:14px 0 6px;font-size:15px;color:#a6adc8;width:100%;text-align:left;">Modelo de IA:</p>
           <select id="ea-model-select" style="width:100%;box-sizing:border-box;padding:9px 10px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#cdd6f4;font-family:monospace;font-size:13px;margin-bottom:8px;">
-            <option value="cohere/north-mini-code:free" ${modeloSalvo === 'cohere/north-mini-code:free' ? 'selected' : ''}>Cohere: North Mini Code (free)</option>
-            <option value="openai/gpt-oss-120b:free" ${modeloSalvo === 'openai/gpt-oss-120b:free' ? 'selected' : ''}>OpenAI: gpt-oss-120b (free)</option>
-            <option value="meta-llama/llama-3.3-70b-instruct:free" ${modeloSalvo === 'meta-llama/llama-3.3-70b-instruct:free' ? 'selected' : ''}>Meta: Llama 3.3 70B Instruct (free)</option>
+            <option value="cohere/north-mini-code:free" ${selectedValue === 'cohere/north-mini-code:free' ? 'selected' : ''}>Cohere: North Mini Code (free)</option>
+            <option value="openai/gpt-oss-120b:free" ${selectedValue === 'openai/gpt-oss-120b:free' ? 'selected' : ''}>OpenAI: gpt-oss-120b (free)</option>
+            <option value="meta-llama/llama-3.3-70b-instruct:free" ${selectedValue === 'meta-llama/llama-3.3-70b-instruct:free' ? 'selected' : ''}>Meta: Llama 3.3 70B Instruct (free)</option>
+            <option value="__custom__" ${isCustom ? 'selected' : ''}>Outro (digitar manualmente)</option>
           </select>
+
+          <div id="ea-custom-model-container" style="width:100%;display:${isCustom ? 'block' : 'none'};margin-bottom:8px;">
+            <input id="ea-custom-model-input" type="text" placeholder="provider/model-name" value="${isCustom ? modeloSalvo : ''}" style="width:100%;box-sizing:border-box;padding:9px 10px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#cdd6f4;font-family:monospace;font-size:13px;">
+          </div>
 
           <div style="width:100%;border-top:1px solid #313244;margin:14px 0;"></div>
 
@@ -354,11 +367,30 @@
         </div>
       `);
 
+      const selectEl = document.getElementById('ea-model-select');
+      const customContainer = document.getElementById('ea-custom-model-container');
+      const customInput = document.getElementById('ea-custom-model-input');
       const saveBtn = document.getElementById('ea-model-save');
       const backBtn = document.getElementById('ea-model-back');
 
+      selectEl.onchange = () => {
+        if (selectEl.value === '__custom__') {
+          customContainer.style.display = 'block';
+        } else {
+          customContainer.style.display = 'none';
+        }
+      };
+
       saveBtn.onclick = () => {
-        const selectEl = document.getElementById('ea-model-select');
+        let modeloFinal = selectEl.value;
+        if (modeloFinal === '__custom__') {
+          modeloFinal = customInput.value.trim();
+          if (!modeloFinal) {
+            document.getElementById('ea-interval-err').textContent = 'Digite o nome do modelo customizado.';
+            return;
+          }
+        }
+
         const minVal = parseFloat(document.getElementById('ea-min-input').value.replace(',', '.'));
         const maxVal = parseFloat(document.getElementById('ea-max-input').value.replace(',', '.'));
 
@@ -367,7 +399,7 @@
           return;
         }
 
-        storage.setSelectedModel(selectEl.value);
+        storage.setSelectedModel(modeloFinal);
         storage.setAutoMinMin(minVal);
         storage.setAutoMaxMin(maxVal);
 
