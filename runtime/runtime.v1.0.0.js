@@ -11,6 +11,8 @@
   'use strict';
 
   // Recupera os shims de GM injetados pelo Bootloader (contexto privilegiado)
+  console.log("[Runtime] window.__ElefanteGM =", window.__ElefanteGM);
+  console.log("[Runtime] window =", window);
   const GM = window.__ElefanteGM || {};
   const _GM_getValue      = GM.getValue      || (() => null);
   const _GM_setValue      = GM.setValue      || (() => {});
