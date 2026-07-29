@@ -8,7 +8,7 @@
 
   const UIModule = {
     name: 'ui',
-    version: '1.0.0',
+    version: '1.0.1',
     depends: [],
 
     async init(runtime) {
@@ -324,7 +324,7 @@
     renderConfigScreen() {
       const i = this.icons;
       const storage = this.runtime.services.storage;
-      const modeloSalvo = storage.getSelectedModel();
+      const modeloSalvo = storage.getSelectedModel() || 'cohere/north-mini-code:free';
       const minSalvo = storage.getAutoMinMin();
       const maxSalvo = storage.getAutoMaxMin();
 
