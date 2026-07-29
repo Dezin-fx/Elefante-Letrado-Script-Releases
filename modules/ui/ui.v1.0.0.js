@@ -341,7 +341,7 @@
           <b style="color:#cba6f7;font-family:'Manrope', sans-serif;font-weight:700;letter-spacing:0.2px;font-size:16px;display:flex;align-items:center;gap:8px;">${i.svgConfig} Configurações</b>
           
           <p style="font-family: 'Inter', sans-serif;font-weight: 600;margin:14px 0 6px;font-size:15px;color:#a6adc8;width:100%;text-align:left;">Modelo de IA:</p>
-          <select id="ea-model-select" style="width:100%;box-sizing:border-box;padding:9px 10px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#cdd6f4;font-family:monospace;font-size:13px;margin-bottom:8px;">
+          <select id="ea-model-select" style="width:100%;box-sizing:border-box;padding:9px 10px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#cdd6f4;font-family:monospace;font-size:13px;margin-bottom:8px;display:block;text-align:center;text-align-last:center;">
             <option value="cohere/north-mini-code:free" ${selectedValue === 'cohere/north-mini-code:free' ? 'selected' : ''}>Cohere: North Mini Code (free)</option>
             <option value="openai/gpt-oss-120b:free" ${selectedValue === 'openai/gpt-oss-120b:free' ? 'selected' : ''}>OpenAI: gpt-oss-120b (free)</option>
             <option value="meta-llama/llama-3.3-70b-instruct:free" ${selectedValue === 'meta-llama/llama-3.3-70b-instruct:free' ? 'selected' : ''}>Meta: Llama 3.3 70B Instruct (free)</option>
