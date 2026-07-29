@@ -340,7 +340,7 @@
         <div style="display:flex;flex-direction:column;align-items:center;">
           <b style="color:#cba6f7;font-family:'Manrope', sans-serif;font-weight:700;letter-spacing:0.2px;font-size:16px;display:flex;align-items:center;gap:8px;">${i.svgConfig} Configurações</b>
           
-          <p style="font-family: 'Inter', sans-serif;font-weight: 600;margin:14px 0 6px;font-size:15px;color:#a6adc8;width:100%;text-align:left;">Modelo de IA:</p>
+          <p style="font-family: 'Inter', sans-serif;font-weight: 600;margin:14px 0 6px;font-size:15px;color:#a6adc8;width:100%;text-align:left;transform:translateY(9px);">Modelo de IA:</p>
           <select id="ea-model-select" style="width:100%;box-sizing:border-box;padding:9px 10px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#cdd6f4;font-family:monospace;font-size:13px;margin-bottom:8px;display:block;text-align:center;text-align-last:center;">
             <option value="cohere/north-mini-code:free" ${selectedValue === 'cohere/north-mini-code:free' ? 'selected' : ''}>Cohere: North Mini Code (free)</option>
             <option value="openai/gpt-oss-120b:free" ${selectedValue === 'openai/gpt-oss-120b:free' ? 'selected' : ''}>OpenAI: gpt-oss-120b (free)</option>
@@ -350,13 +350,13 @@
 
           <input id="ea-custom-model-input" type="text" placeholder="provider/nome-do-modelo:free" value="${isCustom ? modeloSalvo : ''}" style="width:100%;box-sizing:border-box;padding:9px 10px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#89b4fa;font-family:Inter,sans-serif;font-size:12px;margin-bottom:6px;display:${isCustom ? 'block' : 'none'};text-align:left;">
 
-          <div style="font-size:11px;color:#6c7086;margin-bottom:4px;width:100%;text-align:left;">
+          <div style="font-size:11px;color:#6c7086;margin-bottom:4px;width:100%;text-align:left;transform:translateY(9px);">
             Mais modelos em: <a href="https://openrouter.ai/models" target="_blank" style="color:#89b4fa;text-decoration:none;">openrouter.ai/models</a>
           </div>
 
           <div style="width:100%;border-top:1px solid #313244;margin:14px 0;"></div>
 
-          <p style="margin:0 0 8px;font-size:15px;color:#a6adc8;width:100%;text-align:left;font-family: 'Inter', sans-serif;font-weight: 600;">Intervalo de auto-página (minutos):</p>
+          <p style="margin:0 0 8px;font-size:15px;color:#a6adc8;width:100%;text-align:left;font-family: 'Inter', sans-serif;font-weight: 600;transform:translateY(9px);">Intervalo de auto-página (minutos):</p>
           <div style="display:flex;align-items:center;gap:10px;width:100%;margin-bottom:4px;">
             <input id="ea-min-input" type="text" inputmode="decimal" value="${minSalvo}" style="flex:1 1 0;min-width:0;height:48px;padding:0 12px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#cdd6f4;font-family:Inter,sans-serif;font-size:15px;font-weight:500;line-height:48px;text-align:center;box-sizing:border-box;outline:none;">
             <span style="color:#a6adc8;font-weight:600;font-family:'Manrope',sans-serif;flex-shrink:0;">a</span>
