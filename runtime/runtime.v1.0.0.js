@@ -10,13 +10,10 @@
 (function () {
   'use strict';
 
-  // Recupera os shims de GM injetados pelo Bootloader (contexto privilegiado)
-  console.log("[Runtime] window.__ElefanteGM =", window.__ElefanteGM);
-  console.log("[Runtime] window =", window);
   const GM = window.__ElefanteGM || {};
-  const _GM_getValue      = GM.getValue      || (() => null);
-  const _GM_setValue      = GM.setValue      || (() => {});
-  const _GM_xmlhttpRequest = GM.xmlhttpRequest || (() => { throw new Error('[Runtime] GM_xmlhttpRequest não disponível.'); });
+  const _GM_getValue       = (key, def) => (typeof GM.getValue === 'function' ? GM.getValue(key, def) : def);
+  const _GM_setValue       = (key, val) => (typeof GM.setValue === 'function' ? GM.setValue(key, val) : undefined);
+  const _GM_xmlhttpRequest = (details) => (typeof GM.xmlhttpRequest === 'function' ? GM.xmlhttpRequest(details) : undefined);
 
   class EventBus {
     constructor() {
@@ -125,16 +122,33 @@
 
       // Storage Nativo Encapsulado (usa shims GM injetados pelo Bootloader)
       this.registerService('storage', {
-        getApiKey: () => _GM_getValue('apiKey', ''),
+        getApiKey: () => {
+          const v = _GM_getValue('apiKey', '');
+          return (v && v !== 'null' && v !== 'undefined') ? v : '';
+        },
         setApiKey: (k) => _GM_setValue('apiKey', k),
-        getBookTitle: () => _GM_getValue('bookTitle', ''),
+        getBookTitle: () => {
+          const v = _GM_getValue('bookTitle', '');
+          return (v && v !== 'null' && v !== 'undefined') ? v : '';
+        },
         setBookTitle: (t) => _GM_setValue('bookTitle', t),
-        getNoAI: () => _GM_getValue('noAI', false),
+        getNoAI: () => Boolean(_GM_getValue('noAI', false)),
         setNoAI: (v) => _GM_setValue('noAI', Boolean(v)),
-        getSelectedModel: () => _GM_getValue('selectedModel', 'cohere/north-mini-code:free'),
+        getSelectedModel: () => {
+          const v = _GM_getValue('selectedModel', 'cohere/north-mini-code:free');
+          return (v && v !== 'null' && v !== 'undefined') ? v : 'cohere/north-mini-code:free';
+        },
         setSelectedModel: (m) => _GM_setValue('selectedModel', m),
-        getAutoMinMin: () => _GM_getValue('autoMinMin', 2),
-        getAutoMaxMin: () => _GM_getValue('autoMaxMin', 3),
+        getAutoMinMin: () => {
+          const v = _GM_getValue('autoMinMin', 2);
+          const num = parseFloat(v);
+          return (!isNaN(num) && num >= 0.5) ? num : 2;
+        },
+        getAutoMaxMin: () => {
+          const v = _GM_getValue('autoMaxMin', 3);
+          const num = parseFloat(v);
+          return (!isNaN(num) && num <= 60) ? num : 3;
+        },
         setAutoMinMin: (v) => _GM_setValue('autoMinMin', v),
         setAutoMaxMin: (v) => _GM_setValue('autoMaxMin', v),
         resetAll: () => {
