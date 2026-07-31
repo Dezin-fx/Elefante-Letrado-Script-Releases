@@ -153,8 +153,14 @@
         setAutoMaxMin: (v) => _GM_setValue('autoMaxMin', v),
         resetAll: () => {
           _GM_setValue('apiKey', '');
-          _GM_setValue('bookTitle', '');
           _GM_setValue('noAI', false);
+          const domTitle = document.querySelector('span.book-title')?.title?.trim() ||
+                           document.querySelector('span.book-title')?.textContent?.trim();
+          if (domTitle) {
+            _GM_setValue('bookTitle', domTitle);
+          } else {
+            _GM_setValue('bookTitle', '');
+          }
         }
       });
     }

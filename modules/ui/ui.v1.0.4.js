@@ -290,7 +290,14 @@
     renderMainScreen() {
       const i = this.icons;
       const storage = this.runtime.services.storage;
-      const bookTitle = storage.getBookTitle() || 'Modo leitura';
+
+      const domTitle = document.querySelector('span.book-title')?.title?.trim() ||
+                       document.querySelector('span.book-title')?.textContent?.trim();
+      if (domTitle) {
+        storage.setBookTitle(domTitle);
+      }
+
+      const bookTitle = storage.getBookTitle() || domTitle || 'Modo leitura';
       const apiKey = storage.getApiKey();
       const defaultStatus = this.getDefaultStatus();
 
