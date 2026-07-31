@@ -22,7 +22,7 @@
       });
 
       runtime.events.on('quiz:closed', () => {
-        this.setStatus('📖 Lendo Livro...', '#89b4fa');
+        this.resetStatus();
       });
 
       runtime.events.on('quiz:solved', (payload) => {
@@ -34,9 +34,9 @@
         this.setStatus('Navegando...', '#89b4fa');
       });
 
-      runtime.events.on('reader:stopped', (payload) => {
+      runtime.events.on('reader:stopped', () => {
         this.updateAutoButton(false);
-        this.setStatus(payload?.reason || 'Pronto', '#a6e3a1');
+        this.resetStatus();
       });
 
       // Se o módulo Settings ou Runtime for resetado
@@ -170,12 +170,30 @@
       }
     },
 
+    getDefaultStatus() {
+      const storage = this.runtime?.services?.storage;
+      if (!storage) return { text: '🛈 Modo com IA ativa', color: '#a6e3a1' };
+      const apiKey = storage.getApiKey();
+      const noAI = storage.getNoAI();
+      const hasAI = Boolean(apiKey) && !noAI;
+
+      return {
+        text: hasAI ? '🛈 Modo com IA ativa' : 'ⓘ Modo de apenas leitura',
+        color: hasAI ? '#a6e3a1' : '#f9e2af'
+      };
+    },
+
     setStatus(text, color = '#a6e3a1') {
       const statusEl = document.getElementById('ea-status');
       if (statusEl) {
         statusEl.textContent = text;
         statusEl.style.color = color;
       }
+    },
+
+    resetStatus() {
+      const def = this.getDefaultStatus();
+      this.setStatus(def.text, def.color);
     },
 
     updateAutoButton(active) {
@@ -274,13 +292,14 @@
       const storage = this.runtime.services.storage;
       const bookTitle = storage.getBookTitle() || 'Modo leitura';
       const apiKey = storage.getApiKey();
+      const defaultStatus = this.getDefaultStatus();
 
       this.renderContent(`
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
           <b style="color:#cba6f7;font-family: 'Plus Jakarta Sans', sans-serif;font-size:15px;letter-spacing: 0.3px;font-weight:600;display:flex;align-items:center;gap:8px;">${i.svgLivro} ${bookTitle}</b>
           <button id="ea-config-btn" class="ea-btn-icone ea-config-btn" title="Configurações" style="background:#313244;border:none;border-radius:8px;color:#cdd6f4;cursor:pointer;padding:6px;display:flex;align-items:center;justify-content:center;">${i.svgConfig}</button>
         </div>
-        <div id="ea-status" style="font-size:14px;color:#a6adc8;font-family:'Nunito Sans', sans-serif;font-weight:500;letter-spacing:0.2px;">Pronto</div>
+        <div id="ea-status" style="font-size:14px;color:${defaultStatus.color};font-family:'Nunito Sans', sans-serif;font-weight:500;letter-spacing:0.2px;">${defaultStatus.text}</div>
 
         <button id="ea-auto-btn" class="ea-btn-animado" style="
           width:100%;padding:11px;border:none; font-family: 'Manrope', sans-serif;
