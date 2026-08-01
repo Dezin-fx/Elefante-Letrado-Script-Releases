@@ -332,6 +332,13 @@
       const configBtn = document.getElementById('ea-config-btn');
       const resetBtn = document.getElementById('ea-reset-btn');
 
+      // Sincroniza o estado visual se o módulo Reader já estiver ativo no Runtime
+      const reader = this.runtime?.getModule('reader');
+      if (reader && reader.active) {
+        this.updateAutoButton(true);
+        this.setStatus('Navegando...', '#89b4fa');
+      }
+
       // Emite COMANDOS de ação para o EventBus (A UI não controla o estado do Reader!)
       autoBtn.onclick = () => {
         const isRunning = autoBtn.textContent.includes('Parar');
