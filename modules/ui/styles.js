@@ -1,5 +1,5 @@
 /**
- * Elefante Letrado Script - UI Styles & Animations
+ * Elefante Letrado Script - UI Styles & Animations v1.0.0
  */
 
 (function () {
@@ -69,7 +69,7 @@
         }
 
         .ea-btn-icone {
-          transition: background-color .2s ease, color .2s ease, filter .2s ease !important;
+          transition: background-color .2s ease, color .2s ease, filter .2s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
 
         .ea-btn-icone:hover {
@@ -79,16 +79,16 @@
         }
 
         .ea-config-btn svg {
-          transform: translateY(1px);
-          transition: transform .3s cubic-bezier(.22,1,.36,1);
+          transform: translateY(-1px);
+          transition: transform .3s cubic-bezier(.22,1,.36,1) !important;
         }
 
         .ea-config-btn:hover svg {
-          transform: translateY(1px) rotate(60deg);
+          transform: translateY(-1px) rotate(45deg) !important;
         }
 
         .ea-config-btn:active svg {
-          transform: translateY(1px) rotate(90deg) scale(.94);
+          transform: translateY(-1px) rotate(60deg) scale(.94) !important;
         }
 
         @keyframes eaFadeKeyframe {
@@ -122,14 +122,16 @@
           margin-top: 4px;
         }
 
-        .ea-btn-icone {
-          transition: background-color .2s ease, color .2s ease, filter .2s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        }
-
+        /* Animação suave de troca de tela (aplicada ao contêiner interno) */
         .ea-fade-in {
           animation: eaFadeKeyframe 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          width: 100%;
         }
 
+        /* Estrutura de minimização do painel */
         .ea-panel-content {
           overflow: hidden;
           transition: max-height 0.38s cubic-bezier(0.16, 1, 0.3, 1),
@@ -155,9 +157,9 @@
         }
 
         .ea-maximizing {
-          max-height: 500px !important;
-          opacity: 1 !important;
-          transform: translateY(0) scale(1) !important;
+          max-height: 600px;
+          opacity: 1;
+          transform: translateY(0) scale(1);
         }
       `;
       document.head.appendChild(estiloAnimacoes);

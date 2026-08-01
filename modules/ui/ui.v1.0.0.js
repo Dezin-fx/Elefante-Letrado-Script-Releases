@@ -8,7 +8,7 @@
 
   const UIModule = {
     name: 'ui',
-    version: '1.0.4',
+    version: '1.0.0',
     depends: [],
 
     async init(runtime) {
@@ -75,87 +75,96 @@
     // -------------------------------------------------------------
     createPanelShell() {
       let panel = document.getElementById('ea-panel');
-      if (panel) return panel;
+      if (!panel) {
+        panel = document.createElement('div');
+        panel.id = 'ea-panel';
+        panel.style.cssText = `
+          position: fixed; top: 20px; right: 20px; z-index: 999999;
+          background: #1e1e2e; color: #cdd6f4; font-family: monospace;
+          border: 1px solid #313244; border-radius: 16px; padding: 20px;
+          box-shadow: 0 12px 40px rgba(0,0,0,0.6); width: 380px;
+          max-width: calc(100vw - 40px); display: flex; flex-direction: column;
+        `;
 
-      panel = document.createElement('div');
-      panel.id = 'ea-panel';
-      panel.style.cssText = `
-        position: fixed; top: 20px; right: 20px; z-index: 999999;
-        background: #1e1e2e; color: #cdd6f4; font-family: monospace;
-        border: 1px solid #313244; border-radius: 16px; padding: 20px;
-        box-shadow: 0 12px 40px rgba(0,0,0,0.6); width: 380px;
-        max-width: calc(100vw - 40px); display: flex; flex-direction: column;
-      `;
-
-      panel.innerHTML = `
-        <div id="ea-drag-header" style="
-          cursor: move; user-select: none; background: #11111b;
-          margin: -20px -20px 0 -20px; padding: 16px 20px 24px 20px;
-          border-radius: 16px 16px 0 0; display: flex; justify-content: space-between;
-          align-items: center; position: relative; z-index: 1;
-        ">
-          <strong style="color:#af74f0;font-family:'Outfit',sans-serif;font-weight:700;font-size:16px;animation:eaTitleGlow 4s ease-in-out infinite;letter-spacing:-0.2px;"> Elefante Letrado Script</strong>
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <button id="ea-min-btn" class="ea-btn-icone" style="width: 24px; height: 24px; border: none; border-radius: 6px; background: #313244; color: #cdd6f4; cursor: pointer; font-size: 14px; font-weight: bold; line-height: 1;">−</button>
+        panel.innerHTML = `
+          <div id="ea-drag-header" style="
+            cursor: move; user-select: none; background: #11111b;
+            margin: -20px -20px 0 -20px; padding: 16px 20px 24px 20px;
+            border-radius: 16px 16px 0 0; display: flex; justify-content: space-between;
+            align-items: center; position: relative; z-index: 1;
+          ">
+            <strong style="color:#af74f0;font-family:'Outfit',sans-serif;font-weight:700;font-size:16px;animation:eaTitleGlow 4s ease-in-out infinite;letter-spacing:-0.2px;"> Elefante Letrado Script</strong>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <button id="ea-min-btn" class="ea-btn-icone" style="width: 24px; height: 24px; border: none; border-radius: 6px; background: #313244; color: #cdd6f4; cursor: pointer; font-size: 14px; font-weight: bold; line-height: 1; transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;">−</button>
+            </div>
           </div>
-        </div>
-        <div id="ea-panel-content" class="ea-panel-content"></div>
-      `;
+          <div id="ea-panel-content" class="ea-panel-content"></div>
+        `;
 
-      document.body.appendChild(panel);
+        document.body.appendChild(panel);
 
-      // Eventos de Drag & Drop
-      let isDragging = false, offsetX = 0, offsetY = 0;
-      const header = document.getElementById("ea-drag-header");
+        // Eventos de Drag & Drop
+        let isDragging = false, offsetX = 0, offsetY = 0;
+        const header = document.getElementById("ea-drag-header");
 
-      header.addEventListener('mousedown', e => {
-        if (e.target.tagName === "BUTTON") return;
-        isDragging = true;
-        offsetX = e.clientX - panel.offsetLeft;
-        offsetY = e.clientY - panel.offsetTop;
-      });
+        header.addEventListener('mousedown', e => {
+          if (e.target.tagName === "BUTTON") return;
+          isDragging = true;
+          offsetX = e.clientX - panel.offsetLeft;
+          offsetY = e.clientY - panel.offsetTop;
+        });
 
-      document.addEventListener('mousemove', e => {
-        if (!isDragging) return;
-        let newLeft = e.clientX - offsetX;
-        let newTop  = e.clientY - offsetY;
-        const maxLeft = window.innerWidth - panel.offsetWidth;
-        const maxTop  = window.innerHeight - panel.offsetHeight;
+        document.addEventListener('mousemove', e => {
+          if (!isDragging) return;
+          let newLeft = e.clientX - offsetX;
+          let newTop  = e.clientY - offsetY;
+          const maxLeft = window.innerWidth - panel.offsetWidth;
+          const maxTop  = window.innerHeight - panel.offsetHeight;
 
-        if (newLeft < 0) newLeft = 0;
-        if (newLeft > maxLeft) newLeft = maxLeft;
-        if (newTop < 0) newTop = 0;
-        if (newTop > maxTop) newTop = maxTop;
+          if (newLeft < 0) newLeft = 0;
+          if (newLeft > maxLeft) newLeft = maxLeft;
+          if (newTop < 0) newTop = 0;
+          if (newTop > maxTop) newTop = maxTop;
 
-        panel.style.left = newLeft + "px";
-        panel.style.top = newTop + "px";
-        panel.style.right = "auto";
-        panel.style.bottom = "auto";
-      });
+          panel.style.left = newLeft + "px";
+          panel.style.top = newTop + "px";
+          panel.style.right = "auto";
+          panel.style.bottom = "auto";
+        });
 
-      document.addEventListener('mouseup', () => { isDragging = false; });
+        document.addEventListener('mouseup', () => { isDragging = false; });
+      }
 
-      // Lógica de Minimização
-      let minimized = false;
+      // Lógica de Minimização (Evita interferência do mousedown e adiciona rotação suave)
       const minBtn = document.getElementById("ea-min-btn");
       const contentArea = document.getElementById("ea-panel-content");
 
-      minBtn.onclick = () => {
-        minimized = !minimized;
-        if (minimized) {
-          contentArea.classList.remove('ea-maximizing');
-          contentArea.classList.add('ea-minimizing');
-          panel.style.paddingBottom = "20px";
-          minBtn.textContent = "+";
-        } else {
-          contentArea.style.display = "flex";
-          contentArea.classList.remove('ea-minimizing');
-          void contentArea.offsetHeight;
-          contentArea.classList.add('ea-maximizing');
-          panel.style.paddingBottom = "20px";
-          minBtn.textContent = "−";
-        }
-      };
+      if (minBtn && contentArea) {
+        minBtn.onmousedown = (e) => {
+          e.stopPropagation();
+        };
+
+        minBtn.onclick = (e) => {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          const isMinimized = contentArea.classList.contains('ea-minimizing');
+          if (!isMinimized) {
+            contentArea.classList.remove('ea-maximizing');
+            contentArea.classList.add('ea-minimizing');
+            minBtn.textContent = "+";
+            minBtn.style.transform = "rotate(180deg)";
+          } else {
+            contentArea.style.display = "flex";
+            contentArea.classList.remove('ea-minimizing');
+            void contentArea.offsetHeight;
+            contentArea.classList.add('ea-maximizing');
+            minBtn.textContent = "−";
+            minBtn.style.transform = "rotate(0deg)";
+          }
+        };
+      }
 
       return panel;
     },
@@ -163,10 +172,7 @@
     renderContent(html) {
       const contentArea = document.getElementById('ea-panel-content');
       if (contentArea) {
-        contentArea.classList.remove('ea-fade-in');
-        contentArea.innerHTML = html;
-        void contentArea.offsetWidth;
-        contentArea.classList.add('ea-fade-in');
+        contentArea.innerHTML = `<div class="ea-fade-in">${html}</div>`;
       }
     },
 
