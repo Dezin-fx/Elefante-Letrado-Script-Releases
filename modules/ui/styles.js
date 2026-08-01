@@ -122,26 +122,42 @@
           margin-top: 4px;
         }
 
+        .ea-btn-icone {
+          transition: background-color .2s ease, color .2s ease, filter .2s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+
         .ea-fade-in {
-          animation: eaFadeKeyframe 0.25s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+          animation: eaFadeKeyframe 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
         }
 
         .ea-panel-content {
           overflow: hidden;
-          transition: max-height 0.25s cubic-bezier(.25,1,.5,1), opacity 0.2s ease, padding 0.25s ease;
+          transition: max-height 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                      opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                      transform 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                      padding 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                      margin 0.38s cubic-bezier(0.16, 1, 0.3, 1);
           display: flex; flex-direction: column; gap: 10px;
           background: #1e1e2e; margin: -12px -20px -20px -20px;
           padding: 24px 20px 20px 20px; border-radius: 18px 18px 12px 12px;
           position: relative; z-index: 2; box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+          transform-origin: top center;
         }
 
         .ea-minimizing {
-          max-height: 0 !important; opacity: 0;
-          padding-top: 0 !important; padding-bottom: 0 !important; margin-bottom: 0 !important;
+          max-height: 0 !important;
+          opacity: 0 !important;
+          transform: translateY(-8px) scale(0.96) !important;
+          padding-top: 0 !important;
+          padding-bottom: 0 !important;
+          margin-bottom: 0 !important;
+          pointer-events: none !important;
         }
 
         .ea-maximizing {
-          max-height: 500px; opacity: 1;
+          max-height: 500px !important;
+          opacity: 1 !important;
+          transform: translateY(0) scale(1) !important;
         }
       `;
       document.head.appendChild(estiloAnimacoes);
