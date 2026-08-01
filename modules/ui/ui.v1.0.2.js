@@ -307,18 +307,32 @@
       const apiKey = storage.getApiKey();
       const defaultStatus = this.getDefaultStatus();
 
+      const readerModule = typeof this.runtime?.getModule === 'function'
+        ? this.runtime.getModule('reader')
+        : this.runtime?.modules?.get('reader');
+
+      const isRunning = Boolean(readerModule && readerModule.active);
+
+      const buttonText = isRunning
+        ? '⏹ Parar'
+        : (apiKey ? '▶ Iniciar' : '▶ Iniciar Auto-Página');
+
+      const buttonBg = isRunning ? '#f38ba8' : '#89b4fa';
+      const statusText = isRunning ? 'Navegando...' : defaultStatus.text;
+      const statusColor = isRunning ? '#89b4fa' : defaultStatus.color;
+
       this.renderContent(`
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
           <b style="color:#cba6f7;font-family: 'Plus Jakarta Sans', sans-serif;font-size:15px;letter-spacing: 0.3px;font-weight:600;display:flex;align-items:center;gap:8px;">${i.svgLivro} ${bookTitle}</b>
           <button id="ea-config-btn" class="ea-btn-icone ea-config-btn" title="Configurações" style="background:#313244;border:none;border-radius:8px;color:#cdd6f4;cursor:pointer;padding:6px;display:flex;align-items:center;justify-content:center;">${i.svgConfig}</button>
         </div>
-        <div id="ea-status" style="font-size:14px;color:${defaultStatus.color};font-family:'Nunito Sans', sans-serif;font-weight:500;letter-spacing:0.2px;">${defaultStatus.text}</div>
+        <div id="ea-status" style="font-size:14px;color:${statusColor};font-family:'Nunito Sans', sans-serif;font-weight:500;letter-spacing:0.2px;">${statusText}</div>
 
         <button id="ea-auto-btn" class="ea-btn-animado" style="
           width:100%;padding:11px;border:none; font-family: 'Manrope', sans-serif;
-          font-weight:700; border-radius:10px;background:#89b4fa;
+          font-weight:700; border-radius:10px;background:${buttonBg};
           font-size:14px;cursor:pointer;color:#1e1e2e; transform:translateY(5px);
-        ">${apiKey ? '▶ Iniciar' : '▶ Iniciar Auto-Página'}</button>
+        ">${buttonText}</button>
 
         <div id="ea-result" style="max-height:300px;overflow:auto;font-size:12px;white-space:pre-wrap;color:#a6adc8;"></div>
 
@@ -332,19 +346,15 @@
       const configBtn = document.getElementById('ea-config-btn');
       const resetBtn = document.getElementById('ea-reset-btn');
 
-      // Sincroniza o estado visual se o módulo Reader já estiver ativo no Runtime
-      const reader = typeof this.runtime?.getModule === 'function' 
-        ? this.runtime.getModule('reader') 
-        : this.runtime?.modules?.get('reader');
-      if (reader && reader.active) {
-        this.updateAutoButton(true);
-        this.setStatus('Navegando...', '#89b4fa');
-      }
-
-      // Emite COMANDOS de ação para o EventBus (A UI não controla o estado do Reader!)
+      // Emite COMANDOS de ação para o EventBus baseando-se no estado REAL do Reader
       autoBtn.onclick = () => {
-        const isRunning = autoBtn.textContent.includes('Parar');
-        if (isRunning) {
+        const currentReader = typeof this.runtime?.getModule === 'function'
+          ? this.runtime.getModule('reader')
+          : this.runtime?.modules?.get('reader');
+
+        const activeNow = Boolean(currentReader && currentReader.active);
+
+        if (activeNow) {
           this.runtime.events.sendCommand('command:reader:stop');
         } else {
           this.runtime.events.sendCommand('command:reader:start');
