@@ -180,6 +180,10 @@
       console.log(`[⚙️ Runtime] Módulo "${moduleDef.name}" v${moduleDef.version || '1.0.0'} registrado.`);
     }
 
+    getModule(name) {
+      return this.modules.get(name);
+    }
+
     async bootFromManifest(manifest, baseUrl) {
       console.log(`\n======================================================`);
       console.log(`🚀 RUNTIME v${this.version} - BOOT DO MANIFESTO (${manifest.channel})`);

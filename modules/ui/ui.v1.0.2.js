@@ -333,7 +333,9 @@
       const resetBtn = document.getElementById('ea-reset-btn');
 
       // Sincroniza o estado visual se o módulo Reader já estiver ativo no Runtime
-      const reader = this.runtime?.getModule('reader');
+      const reader = typeof this.runtime?.getModule === 'function' 
+        ? this.runtime.getModule('reader') 
+        : this.runtime?.modules?.get('reader');
       if (reader && reader.active) {
         this.updateAutoButton(true);
         this.setStatus('Navegando...', '#89b4fa');
