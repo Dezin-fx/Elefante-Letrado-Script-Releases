@@ -141,16 +141,15 @@
     },
 
     triggerPageTurn() {
-      console.log('[📖 Reader] ➡️ Disparando tecla ArrowRight no leitor...');
-      const evt = new KeyboardEvent('keydown', {
-        key: 'ArrowRight',
-        code: 'ArrowRight',
-        keyCode: 39,
-        which: 39,
-        bubbles: true
-      });
-      document.body.dispatchEvent(evt);
-      document.dispatchEvent(evt);
+      const angular = this.runtime?.services?.angular;
+      const readerView = angular?.getReaderView() || window.appComponent?._reader?.readerView;
+
+      if (readerView && typeof readerView.next === 'function') {
+        console.log('[📖 Reader] ➡️ Avançando página via ReaderView.next()...');
+        readerView.next();
+      } else {
+        console.warn('[📖 Reader] ⚠️ ReaderView nativo indisponível. Não foi possível avançar a página.');
+      }
     },
 
     isQuizModalOpen() {
