@@ -1,5 +1,5 @@
 /**
- * Elefante Letrado Script - Módulo UI v1.0.4
+ * Elefante Letrado Script - Módulo UI v1.0.5
  * Gerenciador de interface visual, renderizador de painel flutuante e formulários.
  */
 
@@ -8,7 +8,7 @@
 
   const UIModule = {
     name: 'ui',
-    version: '1.0.4',
+    version: '1.0.5',
     depends: [],
 
     async init(runtime) {
@@ -135,7 +135,7 @@
         document.addEventListener('mouseup', () => { isDragging = false; });
       }
 
-      // Lógica de Minimização (Evita interferência do mousedown e adiciona rotação suave)
+      // Lógica de Minimização (Evita interferência do mousedown e adiciona alternância determinística)
       const minBtn = document.getElementById("ea-min-btn");
       const contentArea = document.getElementById("ea-panel-content");
 
