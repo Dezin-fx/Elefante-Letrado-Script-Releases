@@ -245,7 +245,7 @@
             padding: 4px; display: flex; align-items: center; justify-content: center;
           " title="Mostrar/Ocultar chave">${i.svgOlhoFechado}</button>
         </div>
-        <div id="ea-err" class="ea-error-box" style="width:100%;color:#f38ba8;font-size:12px;line-height:1.2;transform:translateY(-15px);opacity:0.85;"></div>
+        <div id="ea-err" class="ea-error-box" style="width:100%;color:#f38ba8;font-size:12px;line-height:1.2;transform:translateY(-15px);opacity:0.90;"></div>
         <button id="ea-ok" class="ea-btn-animado" style="
           width:100%;padding:11px;border:none;border-radius:10px; font-family: 'Manrope', sans-serif;
           font-weight:700; background:#a6e3a1;color:#1e1e2e; font-size:14px;cursor:pointer; margin-top: -12px;
@@ -413,7 +413,7 @@
             <span style="color:#a6adc8;font-weight:600;font-family:'Manrope',sans-serif;flex-shrink:0;">a</span>
             <input id="ea-max-input" type="text" inputmode="decimal" value="${maxSalvo}" style="flex:1 1 0;min-width:0;height:48px;padding:0 12px;border:2px solid #45475a;border-radius:8px;background:#11111b;color:#cdd6f4;font-family:Inter,sans-serif;font-size:15px;font-weight:500;line-height:48px;text-align:center;box-sizing:border-box;outline:none;">
           </div>
-          <div id="ea-interval-err" style="color:#f38ba8;font-size:12px;min-height:0;margin-bottom:2px;width:100%;transform:translateY(-7px);opacity:0.85;"></div>
+          <div id="ea-interval-err" style="color:#f38ba8;font-size:12px;min-height:0;margin-bottom:2px;width:100%;transform:translateY(-7px);opacity:0.90;"></div>
 
           <button id="ea-model-save" class="ea-btn-animado" style="width:100%;padding:11px;border:none;border-radius:10px;background:#a6e3a1;color:#1e1e2e;font-weight:700;font-size:14px;cursor:pointer;margin-bottom:8px;">💾 Salvar</button>
           <button id="ea-model-back" class="ea-btn-animado" style="width:100%;padding:10px;border:none;border-radius:10px;background:#45475a;color:#cdd6f4;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">${i.svgVoltar} Voltar</button>
