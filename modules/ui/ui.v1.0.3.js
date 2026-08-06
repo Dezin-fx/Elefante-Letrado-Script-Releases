@@ -245,7 +245,7 @@
             padding: 4px; display: flex; align-items: center; justify-content: center;
           " title="Mostrar/Ocultar chave">${i.svgOlhoFechado}</button>
         </div>
-        <div id="ea-err" class="ea-error-box" style="width:100%;color:#f38ba8;font-size:12px;line-height:1.2;transform:translateY(-15px);"></div>
+        <div id="ea-err" class="ea-error-box" style="width:100%;color:#f38ba8;font-size:12px;line-height:1.2;transform:translateY(-16px);opacity:0.85;"></div>
         <button id="ea-ok" class="ea-btn-animado" style="
           width:100%;padding:11px;border:none;border-radius:10px; font-family: 'Manrope', sans-serif;
           font-weight:700; background:#a6e3a1;color:#1e1e2e; font-size:14px;cursor:pointer; margin-top: -12px;
