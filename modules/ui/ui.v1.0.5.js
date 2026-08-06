@@ -149,19 +149,25 @@
             e.preventDefault();
             e.stopPropagation();
           }
-          const isClosed = contentArea.style.display === 'none' || contentArea.classList.contains('ea-minimizing');
-          if (isClosed) {
-            contentArea.style.display = 'flex';
-            contentArea.classList.remove('ea-minimizing');
-            contentArea.classList.add('ea-maximizing');
-            minBtn.textContent = "−";
-            minBtn.style.transform = "rotate(0deg)";
-          } else {
-            contentArea.style.display = 'none';
-            contentArea.classList.add('ea-minimizing');
+          const isMinimized = contentArea.classList.contains('ea-minimizing');
+          if (!isMinimized) {
+            contentArea.style.maxHeight = contentArea.scrollHeight + 'px';
+            void contentArea.offsetHeight;
             contentArea.classList.remove('ea-maximizing');
+            contentArea.classList.add('ea-minimizing');
             minBtn.textContent = "+";
             minBtn.style.transform = "rotate(180deg)";
+          } else {
+            contentArea.classList.remove('ea-minimizing');
+            contentArea.classList.add('ea-maximizing');
+            contentArea.style.maxHeight = (contentArea.scrollHeight + 60) + 'px';
+            minBtn.textContent = "−";
+            minBtn.style.transform = "rotate(0deg)";
+            setTimeout(() => {
+              if (!contentArea.classList.contains('ea-minimizing')) {
+                contentArea.style.maxHeight = 'none';
+              }
+            }, 380);
           }
         };
       }
