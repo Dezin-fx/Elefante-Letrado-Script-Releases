@@ -163,6 +163,16 @@
           }
         }
       });
+
+      // Ponte de Infraestrutura Angular (Angular Bridge)
+      this.registerService('angular', {
+        isAvailable: () => Boolean(window.appComponent),
+        getAppComponent: () => window.appComponent || null,
+        getReader: () => window.appComponent?._reader || null,
+        getReaderView: () => window.appComponent?._reader?.readerView || null,
+        getBookInfo: () => window.appComponent?._bookInfo || null,
+        getBookPages: () => window.appComponent?._bookPages || null
+      });
     }
 
     registerService(name, serviceImpl) {
